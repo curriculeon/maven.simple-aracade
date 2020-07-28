@@ -27,7 +27,6 @@ public class ArcadeAccountManager {
             if (userKeys.get(accountName).getAccountPassword().equals(accountPassword))
                 return userKeys.get(accountName);
         }
-        System.out.println(userKeys);
         return null;
     }
 
