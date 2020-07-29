@@ -19,14 +19,15 @@ public class Arcade implements Runnable {
 
     @Override
     public void run() {
+        ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
         String arcadeDashBoardInput;
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
-            ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
             if ("select-game".equals(arcadeDashBoardInput)) {
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
                 ArcadeAccount arcadeAccount = arcadeAccountManager.getAccount(accountName, accountPassword);
+                System.out.println(arcadeAccount);
                 boolean isValidLogin = arcadeAccount != null;
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
