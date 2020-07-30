@@ -1,5 +1,8 @@
 package com.github.curriculeon.arcade;
 
+import com.github.curriculeon.utils.AnsiColor;
+import com.github.curriculeon.utils.IOConsole;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,9 +13,14 @@ import java.util.List;
  * it is advised that every instruction in this class is logged
  */
 public class ArcadeAccountManager {
-    private static final List<ArcadeAccount> arcadeAccountList = new ArrayList<>();;
+    private final static ArcadeAccountManager instance = new ArcadeAccountManager();
+    private static final List<ArcadeAccount> arcadeAccountList = new ArrayList<>();
+    private static IOConsole console = new IOConsole(AnsiColor.CYAN);
 
-    public ArcadeAccountManager() {}
+    private ArcadeAccountManager() {}
+    public static ArcadeAccountManager getInstance() {
+        return instance;
+    }
 
     /**
      * @param accountName name of account to be returned
@@ -20,12 +28,11 @@ public class ArcadeAccountManager {
      * @return `ArcadeAccount` with specified `accountName` and `accountPassword`
      */
     public ArcadeAccount getAccount(String accountName, String accountPassword) {
-        Comparator<ArcadeAccount> areSame = Comparator.comparing(ArcadeAccount::getAccountName)
-                                                      .thenComparing(ArcadeAccount::getAccountPassword);
-        ArcadeAccount currentPlayer = new ArcadeAccount(accountName, accountPassword);
-        System.out.println(arcadeAccountList);
+        Comparator<ArcadeAccount> compareArcadeAccount = Comparator.comparing(ArcadeAccount::getAccountName)
+                                                                   .thenComparing(ArcadeAccount::getAccountPassword);
+        ArcadeAccount comparingArcadeAccount = new ArcadeAccount(accountName, accountPassword);
         for (ArcadeAccount arcadeAccount : arcadeAccountList) {
-            if(areSame.compare(arcadeAccount, currentPlayer) == 0) {
+            if(compareArcadeAccount.compare(arcadeAccount, comparingArcadeAccount) == 0) {
                 return arcadeAccount;
             }
         }
@@ -39,6 +46,7 @@ public class ArcadeAccountManager {
      * @return new instance of `ArcadeAccount` with specified `accountName` and `accountPassword`
      */
     public ArcadeAccount createAccount(String accountName, String accountPassword) {
+        console.println("%s account was created, the password is %s.", accountName, accountPassword);
          return new ArcadeAccount(accountName, accountPassword);
     }
 
@@ -48,5 +56,6 @@ public class ArcadeAccountManager {
      */
     public void registerAccount(ArcadeAccount arcadeAccount) {
         arcadeAccountList.add(arcadeAccount);
+        console.println("The player %s was added to the list.", arcadeAccount.getAccountName());
     }
 }

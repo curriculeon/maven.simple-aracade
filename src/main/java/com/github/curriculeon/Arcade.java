@@ -16,10 +16,10 @@ import com.github.curriculeon.utils.IOConsole;
  */
 public class Arcade implements Runnable {
     private static final IOConsole console = new IOConsole(AnsiColor.BLUE);
+    private ArcadeAccountManager arcadeAccountManager = ArcadeAccountManager.getInstance();
 
     @Override
     public void run() {
-        ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
         String arcadeDashBoardInput;
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
@@ -34,7 +34,8 @@ public class Arcade implements Runnable {
                     if (gameSelectionInput.equals("SLOTS")) {
                         play(new SlotsGame(), new SlotsPlayer());
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
-                        play(new NumberGuessGame(), new NumberGuessPlayer());
+                        NumberGuessPlayer numberGuessPlayer = new NumberGuessPlayer(arcadeAccount.getAccountName(), arcadeAccount.getAccountPassword());
+                        play(new NumberGuessGame(numberGuessPlayer), numberGuessPlayer);
                     } else {
                         // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
