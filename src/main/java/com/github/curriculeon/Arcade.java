@@ -20,9 +20,9 @@ public class Arcade implements Runnable {
     @Override
     public void run() {
         String arcadeDashBoardInput;
+        ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
-            ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
             if ("select-game".equals(arcadeDashBoardInput)) {
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
@@ -31,9 +31,9 @@ public class Arcade implements Runnable {
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
-                        play(new SlotsGame(), new SlotsPlayer());
+                        play(new SlotsGame(), new SlotsPlayer(arcadeAccount));
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
-                        play(new NumberGuessGame(), new NumberGuessPlayer());
+                        play(new NumberGuessGame(), new NumberGuessPlayer(arcadeAccount));
                     } else {
                         // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
