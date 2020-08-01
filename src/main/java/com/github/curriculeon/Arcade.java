@@ -32,7 +32,8 @@ public class Arcade implements Runnable {
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
-                        play(new SlotsGame(), new SlotsPlayer());
+                        SlotsPlayer slotsPlayer = new SlotsPlayer(arcadeAccount.getAccountName(), arcadeAccount.getAccountPassword());
+                        play(new SlotsGame(slotsPlayer), slotsPlayer);
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
                         NumberGuessPlayer numberGuessPlayer = new NumberGuessPlayer(arcadeAccount.getAccountName(), arcadeAccount.getAccountPassword());
                         play(new NumberGuessGame(numberGuessPlayer), numberGuessPlayer);

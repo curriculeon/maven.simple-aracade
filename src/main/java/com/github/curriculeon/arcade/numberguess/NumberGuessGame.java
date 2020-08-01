@@ -29,7 +29,7 @@ public class NumberGuessGame implements GameInterface {
 
     @Override
     public void remove(PlayerInterface player) {
-        this.player = null;
+            this.player = null;
     }
 
     @Override

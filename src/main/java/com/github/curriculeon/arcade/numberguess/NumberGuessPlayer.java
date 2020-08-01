@@ -23,16 +23,16 @@ public class NumberGuessPlayer implements PlayerInterface {
         return playerName;
     }
 
-    public String getPlayerPassword() {
-        return playerPassword;
-    }
-
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
     public void setPlayerPassword(String playerPassword) {
         this.playerPassword = playerPassword;
+    }
+
+    public String getPlayerPassword() {
+        return playerPassword;
     }
 
     @Override
