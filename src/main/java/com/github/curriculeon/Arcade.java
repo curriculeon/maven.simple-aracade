@@ -20,9 +20,9 @@ public class Arcade implements Runnable {
     @Override
     public void run() {
         String arcadeDashBoardInput;
+        ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
-            ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
             if ("select-game".equals(arcadeDashBoardInput)) {
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
@@ -31,7 +31,7 @@ public class Arcade implements Runnable {
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
-                        play(new SlotsGame(), new SlotsPlayer());
+                        play(new SlotsGame(), new SlotsPlayer(arcadeAccount));
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
                         play(new NumberGuessGame(), new NumberGuessPlayer());
                     } else {
@@ -42,7 +42,7 @@ public class Arcade implements Runnable {
                 } else {
                     // TODO - implement better exception handling
                     String errorMessage = "No account found with name of [ %s ] and password of [ %s ]";
-                    throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
+                    throw new RuntimeException(String.format(errorMessage, accountName, accountPassword));
                 }
             } else if ("create-account".equals(arcadeDashBoardInput)) {
                 console.println("Welcome to the account-creation screen.");
