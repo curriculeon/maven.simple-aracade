@@ -1,19 +1,34 @@
 package com.github.curriculeon.arcade.slots;
 
-public enum SlotReel {
-    CHERRY(500),
-    LEMON(750),
-    SEVEN(100),
-    DIAMOND(9999);
-    Integer valueOfSlot;
+import com.github.curriculeon.utils.AnsiColor;
+import com.github.curriculeon.utils.IOConsole;
 
-    SlotReel(Integer valueOfSlot){
-        this.valueOfSlot = valueOfSlot;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
+public class SlotReel {
+    private ReelImage imageOne;
+    private ReelImage imageTwo;
+    private ReelImage imageThree;
 
+    public void spin(){
+       imageOne = getRandom();
+       imageTwo = getRandom();
+       imageThree = getRandom();
     }
 
-    public Integer getValueOfSlot() {
-        return valueOfSlot;
+    private ReelImage getRandom() {
+        ReelImage[] imageArray = ReelImage.values();
+        List<ReelImage> imageList = Arrays.asList(imageArray);
+        Collections.shuffle(imageList);
+        return imageList.get(0);
+    }
+
+    public void display(){
+        IOConsole console = new IOConsole(AnsiColor.PURPLE);
+        console.println("image 1 = " + imageOne);
+        console.println("image 2 = " + imageTwo);
+        console.println("image 3 = " + imageThree);
     }
 }

@@ -14,6 +14,8 @@ import java.util.List;
 public class SlotsGame implements GameInterface {
     private IOConsole ioConsole = new IOConsole(AnsiColor.GREEN);
     private List<PlayerInterface> playerList = new ArrayList<>();
+    private SlotReel slotReel = new SlotReel();
+
     @Override
     public void add(PlayerInterface player) {
         ioConsole.println("Adding player %s to the slot game, ", player.toString());
@@ -28,20 +30,17 @@ public class SlotsGame implements GameInterface {
 
     @Override
     public void run() {
-        ioConsole.println("Welcome to the slot game");
-        ioConsole.println("From here you can select any of the following options:");
-        String userInput = ioConsole.getStringInput("pull-lever, view-slot-real, quit");
-        if ("pull-lever".equalsIgnoreCase(userInput)) {
-            //TODO
-        }else if ("view-slot-real".equalsIgnoreCase(userInput)){
 
-        } else if ("quit".equalsIgnoreCase(userInput)) {
+        for (PlayerInterface playerInterface : playerList) {
+            String userInput;
+            do {
+                SlotsPlayer slotsPlayer = (SlotsPlayer) playerInterface;
+                ioConsole.println("Welcome to the slot game");
+                ioConsole.println("From here you can select any of the following options:");
+                userInput = ioConsole.getStringInput("pull-lever, view-slot-real, quit");
+                slotsPlayer.play(slotReel, userInput);
+            } while (!"quit".equalsIgnoreCase(userInput)); // go onto next player.
+        }//for
 
-        }else {
-            ioConsole.println("You dun messed up");
-            ioConsole.println("Mm hmm, you crazy ");
-            ioConsole.println("Not valid %s", userInput);
-        }
-
-    }
+    }//run
 }
