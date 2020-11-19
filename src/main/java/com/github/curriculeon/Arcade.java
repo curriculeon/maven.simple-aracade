@@ -11,9 +11,7 @@ import com.github.curriculeon.arcade.slots.SlotsPlayer;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
-/**
- * Created by leon on 7/21/2020.
- */
+
 public class Arcade implements Runnable {
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
 
@@ -27,8 +25,8 @@ public class Arcade implements Runnable {
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
                 ArcadeAccount arcadeAccount = arcadeAccountManager.getAccount(accountName, accountPassword);
-                boolean isValidLogin = arcadeAccount != null;
-                if (isValidLogin) {
+                boolean isValidLogin = (arcadeAccount != null);
+                 if (!isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
                         play(new SlotsGame(), new SlotsPlayer());
