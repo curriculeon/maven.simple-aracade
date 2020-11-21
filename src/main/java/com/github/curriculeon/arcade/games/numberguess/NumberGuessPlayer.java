@@ -14,6 +14,6 @@ public class NumberGuessPlayer extends AbstractPlayer {
 
     @Override
     public Integer play() {
-        return new IOConsole().getIntegerInput("Please enter the number you would like to guess.");
+        return getIOConsole().getIntegerInput("Please enter the number you would like to guess.");
     }
 }

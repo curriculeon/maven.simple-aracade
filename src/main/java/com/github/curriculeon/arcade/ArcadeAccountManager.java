@@ -42,7 +42,7 @@ public class ArcadeAccountManager {
                     return validLogin;
                 })
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     /**

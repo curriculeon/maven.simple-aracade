@@ -12,7 +12,6 @@ public class RedOrBlackGame extends AbstractGame<RedOrBlackPlayer> {
     public void run() {
         String userInput = null;
         Deck deck = new Deck();
-        IOConsole console = new IOConsole(AnsiColor.CYAN);
         do {
             deck.shuffle();
             Card card = deck.pop();
@@ -28,14 +27,19 @@ public class RedOrBlackGame extends AbstractGame<RedOrBlackPlayer> {
 
                 if (userInputIsValid) {
                     if (userIsCorrect) {
-                        console.println("You were correct!");
+                        getIOConsole().println("You were correct!");
                     } else {
-                        console.println("You were incorrect!");
+                        getIOConsole().println("You were incorrect!");
                     }
-                    console.println("The value of the card was [ %s ]", card.toString());
+                    getIOConsole().println("The value of the card was [ %s ]", card.toString());
                 }
             }
             deck.push(card);
         } while (!"quit".equalsIgnoreCase(userInput));
+    }
+
+    @Override
+    public IOConsole getIOConsole() {
+        return getIOConsole(AnsiColor.YELLOW);
     }
 }

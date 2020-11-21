@@ -19,10 +19,11 @@ import com.github.curriculeon.utils.IOConsole;
  * Created by leon on 7/21/2020.
  */
 public class Arcade implements Runnable {
-    private final IOConsole console = new IOConsole(AnsiColor.BLUE);
+    IOConsole console = new IOConsole(AnsiColor.BLUE);
 
     @Override
     public void run() {
+        IOConsole error = new IOConsole(AnsiColor.RED);
         ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
         ArcadeAccount testAccount = arcadeAccountManager.createAccount("leon", "hunter");
         arcadeAccountManager.registerAccount(testAccount);
@@ -45,14 +46,12 @@ public class Arcade implements Runnable {
                     } else if ("NUMBERGUESS".equalsIgnoreCase(gameSelectionInput)) {
                         play(new NumberGuessGame(), new NumberGuessPlayer(arcadeAccount));
                     } else {
-                        // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
-                        throw new RuntimeException(String.format(errorMessage, gameSelectionInput));
+                        error.println(errorMessage, gameSelectionInput);
                     }
                 } else {
-                    // TODO - implement better exception handling
                     String errorMessage = "No account found with name of [ %s ] and password of [ %s ]";
-                    throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
+                    error.println(errorMessage, accountName, accountPassword);
                 }
             } else if ("create-account".equals(arcadeDashBoardInput)) {
                 console.println("Welcome to the account-creation screen.");
@@ -60,6 +59,9 @@ public class Arcade implements Runnable {
                 String accountPassword = console.getStringInput("Enter your account password:");
                 ArcadeAccount newAccount = arcadeAccountManager.createAccount(accountName, accountPassword);
                 arcadeAccountManager.registerAccount(newAccount);
+            } else {
+                String errorMessage = "[ %s ] is an invalid input selection";
+                error.println(errorMessage, arcadeDashBoardInput);
             }
         } while (!"logout".equals(arcadeDashBoardInput));
     }
@@ -73,7 +75,7 @@ public class Arcade implements Runnable {
     }
 
     private String getGameSelectionInput() {
-        return console.getStringInput(new StringBuilder()
+        return new IOConsole(AnsiColor.CYAN).getStringInput(new StringBuilder()
                 .append("Welcome to the Game Selection Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
                 .append("\n\t[ SLOTS ], [ NUMBERGUESS ], [ REDORBLACK ], [ HIGHLOW ]")

@@ -11,6 +11,6 @@ public class RedOrBlackPlayer extends AbstractPlayer {
 
     @Override
     public String play() {
-        return new IOConsole().getStringInput("Your options are [ red ], [ black ], [ quit ]");
+        return getIOConsole().getStringInput("Your options are [ red ], [ black ], [ quit ]");
     }
 }

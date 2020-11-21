@@ -16,7 +16,7 @@ public class SlotsPlayer extends AbstractPlayer {
 
     @Override
     public String play() {
-        return new IOConsole().getStringInput(String.format(new StringJoiner("\n")
+        return getIOConsole().getStringInput(String.format(new StringJoiner("\n")
                 .add("[ %s ] it's your turn!")
                 .add("From here you can select any of the following options:")
                 .add("[ pull-lever ], [ view-slots ], [ exit ]")

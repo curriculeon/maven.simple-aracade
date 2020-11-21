@@ -13,7 +13,7 @@ public class HighLowPlayer extends AbstractPlayer {
 
     @Override
     public String play() {
-        return new IOConsole().getStringInput(new StringJoiner("\n")
+        return getIOConsole().getStringInput(new StringJoiner("\n")
                 .add("From here, you can select any of the following options")
                 .add("[ high ], [ low ], [ even ], [ quit ]")
                 .toString());

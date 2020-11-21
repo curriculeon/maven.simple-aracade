@@ -10,7 +10,6 @@ import com.github.curriculeon.utils.IOConsole;
 public class SlotsGame extends AbstractGame<SlotsPlayer> {
     @Override
     public void run() {
-        IOConsole console = new IOConsole();
         for (PlayerInterface player : getPlayerList()) {
             SlotsReelImage image1 = null;
             SlotsReelImage image2 = null;
@@ -23,7 +22,7 @@ public class SlotsGame extends AbstractGame<SlotsPlayer> {
                     image2 = SlotsReelImage.getRandom();
                     image3 = SlotsReelImage.getRandom();
                 } else if ("view-slots".equalsIgnoreCase(userInput)) {
-                    console.println("|| %s || %s || %s ||", image1, image2, image3);
+                    getIOConsole().println("|| %s || %s || %s ||", image1, image2, image3);
                 } else if ("exit".equalsIgnoreCase(userInput)) {
                     break;
                 }
