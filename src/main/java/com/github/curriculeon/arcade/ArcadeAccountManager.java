@@ -1,5 +1,7 @@
 package com.github.curriculeon.arcade;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,24 +12,37 @@ import java.util.List;
 public class ArcadeAccountManager {
     private List<ArcadeAccount> arcadeAccountList;
 
+    public ArcadeAccountManager() {
+        this(new ArrayList<>());
+    }
+
+    public ArcadeAccountManager(ArcadeAccount... arcadeAccounts) {
+        this(Arrays.asList(arcadeAccounts));
+    }
+
+
+    public ArcadeAccountManager(List<ArcadeAccount> arcadeAccountList) {
+        this.arcadeAccountList = arcadeAccountList;
+    }
+
     /**
      * @param accountName     name of account to be returned
      * @param accountPassword password of account to be returned
      * @return `ArcadeAccount` with specified `accountName` and `accountPassword`
      */
     public ArcadeAccount getAccount(String accountName, String accountPassword) {
-        for(ArcadeAccount arcadeAccount : arcadeAccountList) {
-            String currentAccountName = arcadeAccount.getUsername();
-            String currentAccountPassword = arcadeAccount.getPassword();
-            Boolean isValidAccountName = currentAccountName.equals(accountName);
-            Boolean isValidAccountPassword = currentAccountPassword.equals(accountPassword);
-            Boolean isValidLogin = isValidAccountName && isValidAccountPassword;
-            if(isValidLogin) {
-                return arcadeAccount;
-            }
-        }
-        String errorMessage = "Unable to find account with name [ %s ] and password [ %s ]";
-        throw new RuntimeException(String.format(errorMessage, accountName, accountPassword));
+        return arcadeAccountList
+                .stream()
+                .filter(account -> {
+                    String currentAccountName = account.getName();
+                    String currentAccountPassword = account.getPassword();
+                    boolean validName = currentAccountName.equals(accountName);
+                    boolean validPassword = currentAccountPassword.equals(accountPassword);
+                    boolean validLogin = validName && validPassword;
+                    return validLogin;
+                })
+                .findFirst()
+                .get();
     }
 
     /**
@@ -47,6 +62,6 @@ public class ArcadeAccountManager {
      * @param arcadeAccount the arcadeAccount to be added to `this.getArcadeAccountList()`
      */
     public void registerAccount(ArcadeAccount arcadeAccount) {
-        this.arcadeAccountList.add(arcadeAccount);
+        arcadeAccountList.add(arcadeAccount);
     }
 }
