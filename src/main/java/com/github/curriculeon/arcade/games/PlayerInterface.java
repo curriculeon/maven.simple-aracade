@@ -1,6 +1,8 @@
 package com.github.curriculeon.arcade.games;
 
 import com.github.curriculeon.arcade.ArcadeAccount;
+import com.github.curriculeon.utils.AnsiColor;
+import com.github.curriculeon.utils.IOConsole;
 import com.github.curriculeon.utils.IOSocketInterface;
 
 /**
@@ -10,6 +12,11 @@ import com.github.curriculeon.utils.IOSocketInterface;
  * All players are capable of `play`ing a game.
  */
 public interface PlayerInterface extends IOSocketInterface {
+
+    @Override
+    default IOConsole getIOConsole() {
+        return getIOConsole(AnsiColor.YELLOW);
+    }
     /**
      * @return the `ArcadeAccount` used to log into the `Arcade` system to play this game
      */

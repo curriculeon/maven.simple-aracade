@@ -1,5 +1,7 @@
 package com.github.curriculeon.arcade.games;
 
+import com.github.curriculeon.utils.AnsiColor;
+import com.github.curriculeon.utils.IOConsole;
 import com.github.curriculeon.utils.IOSocketInterface;
 
 import java.util.List;
@@ -11,8 +13,16 @@ public interface GameInterface<SomePlayerType extends PlayerInterface>
         extends Runnable, IOSocketInterface {
     List<SomePlayerType> getPlayerList();
 
+    List<SomePlayerType> getWinnerList();
+
+    @Override
+    default IOConsole getIOConsole() {
+        return getIOConsole(AnsiColor.GREEN);
+    }
+
     /**
      * adds a player to the game
+     *
      * @param player the player to be removed from the game
      */
     default void add(SomePlayerType player) {
@@ -21,6 +31,7 @@ public interface GameInterface<SomePlayerType extends PlayerInterface>
 
     /**
      * removes a player from the game
+     *
      * @param player the player to be removed from the game
      */
     default void remove(SomePlayerType player) {

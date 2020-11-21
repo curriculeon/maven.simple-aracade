@@ -13,7 +13,7 @@ public class ApplicationRunnerTest {
         Runnable runnable = new Arcade();
 
         // when
-        runnable.run();
+
 
         // then
         Assert.assertNotNull(runnable.toString());

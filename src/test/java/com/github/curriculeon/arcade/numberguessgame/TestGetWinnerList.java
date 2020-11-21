@@ -1,4 +1,4 @@
-package com.github.curriculeon.arcade.numberguess.numberguessgame;
+package com.github.curriculeon.arcade.numberguessgame;
 
 import com.github.curriculeon.arcade.ArcadeAccount;
 import com.github.curriculeon.arcade.games.numberguess.NumberGuessGame;

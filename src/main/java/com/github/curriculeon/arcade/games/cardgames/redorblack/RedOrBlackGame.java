@@ -1,45 +1,48 @@
 package com.github.curriculeon.arcade.games.cardgames.redorblack;
 
 import com.github.curriculeon.arcade.games.AbstractGame;
-import com.github.curriculeon.arcade.games.PlayerInterface;
 import com.github.curriculeon.arcade.games.cardgames.utils.Card;
 import com.github.curriculeon.arcade.games.cardgames.utils.Deck;
-import com.github.curriculeon.utils.AnsiColor;
-import com.github.curriculeon.utils.IOConsole;
 
 public class RedOrBlackGame extends AbstractGame<RedOrBlackPlayer> {
-    @Override
-    public void run() {
-        String userInput = null;
-        Deck deck = new Deck();
-        do {
-            deck.shuffle();
-            Card card = deck.pop();
-            for (PlayerInterface player : getPlayerList()) {
-                userInput = player.play();
-                boolean userInputIsRed = "red".equalsIgnoreCase(userInput);
-                boolean userInputIsBlack = "black".equalsIgnoreCase(userInput);
-                boolean userInputIsValid = userInputIsRed || userInputIsBlack;
-                boolean cardIsRed = card.isRed();
-                boolean userIsCorrectAboutRed = cardIsRed && userInputIsRed;
-                boolean userIsCorrectAboutBlack = (!cardIsRed) && userInputIsBlack;
-                boolean userIsCorrect = userIsCorrectAboutBlack || userIsCorrectAboutRed;
+    private Card visibleCard;
 
-                if (userInputIsValid) {
-                    if (userIsCorrect) {
-                        getIOConsole().println("You were correct!");
-                    } else {
-                        getIOConsole().println("You were incorrect!");
-                    }
-                    getIOConsole().println("The value of the card was [ %s ]", card.toString());
-                }
-            }
-            deck.push(card);
-        } while (!"quit".equalsIgnoreCase(userInput));
+    @Override
+    public void setup() {
+        Deck deck = new Deck();
+        deck.shuffle();
+        setVisibleCard(deck.pop());
     }
 
     @Override
-    public IOConsole getIOConsole() {
-        return getIOConsole(AnsiColor.YELLOW);
+    public void run() {
+        String userInput;
+        for (RedOrBlackPlayer player : getPlayerList()) {
+            userInput = player.play();
+            boolean userInputIsRed = "red".equalsIgnoreCase(userInput);
+            boolean userInputIsBlack = "black".equalsIgnoreCase(userInput);
+            boolean cardIsRed = getVisibleCard().isRed();
+            boolean userIsCorrectAboutRed = cardIsRed && userInputIsRed;
+            boolean userIsCorrectAboutBlack = (!cardIsRed) && userInputIsBlack;
+            boolean userIsCorrect = userIsCorrectAboutBlack || userIsCorrectAboutRed;
+
+            if (userIsCorrect) {
+                getWinnerList().add(player);
+            }
+        }
+    }
+
+    @Override
+    public void tearDown() {
+        getIOConsole().println("The value of the card was [ %s ]", getVisibleCard().toString());
+        getIOConsole().println("The following is a list of the winners:\n[ %s ]", getWinnerList());
+    }
+
+    public Card getVisibleCard() {
+        return visibleCard;
+    }
+
+    public void setVisibleCard(Card visibleCard) {
+        this.visibleCard = visibleCard;
     }
 }

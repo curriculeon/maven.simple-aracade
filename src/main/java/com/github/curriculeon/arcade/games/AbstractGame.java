@@ -6,6 +6,7 @@ import java.util.List;
 abstract public class AbstractGame<SomePlayerType extends PlayerInterface>
         implements GameInterface<SomePlayerType> {
     private List<SomePlayerType> playerList;
+    protected List<SomePlayerType> winnerList;
 
     public AbstractGame() {
         this(new ArrayList<>());
@@ -18,5 +19,10 @@ abstract public class AbstractGame<SomePlayerType extends PlayerInterface>
     @Override
     public List<SomePlayerType> getPlayerList() {
         return playerList;
+    }
+
+    @Override
+    public List<SomePlayerType> getWinnerList() {
+        return winnerList;
     }
 }
