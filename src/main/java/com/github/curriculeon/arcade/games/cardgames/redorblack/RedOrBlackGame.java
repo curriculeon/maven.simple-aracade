@@ -4,6 +4,8 @@ import com.github.curriculeon.arcade.games.AbstractGame;
 import com.github.curriculeon.arcade.games.cardgames.utils.Card;
 import com.github.curriculeon.arcade.games.cardgames.utils.Deck;
 
+import java.util.ArrayList;
+
 public class RedOrBlackGame extends AbstractGame<RedOrBlackPlayer> {
     private Card visibleCard;
 
@@ -11,7 +13,8 @@ public class RedOrBlackGame extends AbstractGame<RedOrBlackPlayer> {
     public void setup() {
         Deck deck = new Deck();
         deck.shuffle();
-        setVisibleCard(deck.pop());
+        this.visibleCard = deck.pop();
+        this.winnerList = new ArrayList<>();
     }
 
     @Override
@@ -40,9 +43,5 @@ public class RedOrBlackGame extends AbstractGame<RedOrBlackPlayer> {
 
     public Card getVisibleCard() {
         return visibleCard;
-    }
-
-    public void setVisibleCard(Card visibleCard) {
-        this.visibleCard = visibleCard;
     }
 }

@@ -11,9 +11,9 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
-public class TestGetWinnerList {
+public class GetWinnerListTest {
     @Test
-    public void test() {
+    public void positiveTest() {
         // given
         int maximumValue = 999;
         NumberGuessGame numberGuessGame = new NumberGuessGame(maximumValue);
@@ -30,13 +30,36 @@ public class TestGetWinnerList {
         Assert.assertTrue(winnerList.contains(numberGuessPlayer));
     }
 
+    @Test
+    public void negativeTest() {
+        // given
+        int maximumValue = 999;
+        NumberGuessGame numberGuessGame = new NumberGuessGame(maximumValue);
+        numberGuessGame.setup();
+        NumberGuessPlayer numberGuessPlayer = getPlayer("-1");
+        numberGuessGame.add(numberGuessPlayer);
+        numberGuessGame.run();
+
+        // when
+        List<NumberGuessPlayer> winnerList = numberGuessGame.getPlayerList();
+
+        // then
+        Assert.assertFalse(winnerList.contains(numberGuessPlayer));
+    }
+
     private NumberGuessPlayer getPlayer(String inputString) {
         return new NumberGuessPlayer(new ArcadeAccount("test", "")) {
             @Override
             public IOConsole getIOConsole() {
                 byte[] inputBytes = inputString.getBytes();
                 ByteArrayInputStream inputByteArray = new ByteArrayInputStream(inputBytes);
-                return new IOConsole(AnsiColor.RED, inputByteArray, System.out);
+                return new IOConsole(AnsiColor.RED, inputByteArray, System.out) {
+                    @Override
+                    public String getStringInput(String val, Object... vals) {
+                        new IOConsole(AnsiColor.GRAY).print("user input = { %s }", inputString);
+                        return super.getStringInput(val, vals);
+                    }
+                };
             }
         };
     }

@@ -4,7 +4,7 @@ import com.github.curriculeon.arcade.games.numberguess.NumberGuessGame;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestConstructor {
+public class ConstructorTest {
     @Test
     public void testParameterized() {
         // given
